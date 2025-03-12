@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación de Cumpleaños</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+        #container {
+            display: none;
+        }
+        #message {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: yellow;
+            border-radius: 50%;
+            animation: explode 1s linear infinite;
+        }
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(5); opacity: 0; }
+        }
+        .cake {
+            font-size: 50px;
+        }
+        button {
+            padding: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="startButton">Presionar</button>
+    <div id="container">
+        <div id="message">🎉 ¡Feliz Cumpleaños Angie! 🎉</div>
+        <div class="cake">🎂</div>
+    </div>
+    <audio id="music" src="https://www.myinstants.com/media/sounds/happy-birthday-to-you.mp3" loop></audio>
+    <script>
+        document.getElementById("startButton").addEventListener("click", function() {
+            this.style.display = "none";
+            document.getElementById("container").style.display = "block";
+            document.getElementById("music").play();
+            createFireworks();
+        });
+        function createFireworks() {
+            for (let i = 0; i < 20; i++) {
+                let firework = document.createElement("div");
+                firework.className = "firework";
+                document.body.appendChild(firework);
+                firework.style.left = Math.random() * window.innerWidth + "px";
+                firework.style.top = Math.random() * window.innerHeight + "px";
+                setTimeout(() => firework.remove(), 1000);
+            }
+            setTimeout(createFireworks, 500);
+        }
+    </script>
+</body>
+</html>
