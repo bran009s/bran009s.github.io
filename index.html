@@ -3,72 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitación de Cumpleaños</title>
+    <title>Cumple Angie</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: black;
-            color: white;
+            background-color: white;
+            color: black;
             font-family: Arial, sans-serif;
             text-align: center;
             overflow: hidden;
+            flex-direction: column;
+            position: relative;
+        }
+        #container, #loadingScreen, #flarkSticker, #comment1, #comment2 {
+            display: none;
         }
         #container {
-            display: none;
+            opacity: 0;
+            transition: opacity 1.5s ease-in;
         }
         #message {
             font-size: 2em;
-            margin-top: 20px;
+            font-family: 'Pacifico', cursive;
+            color: black;
+            margin: 20px 0;
+            position: relative;
+            z-index: 10;
         }
-        .firework {
+        .sticker {
+            width: 80px;
+            height: auto;
+            position: absolute;
+            z-index: 5;
+        }
+        #letterSticker {
+            width: 60px;
+            margin-bottom: 5px;
+        }
+        #flarkSticker {
+            width: 90px;
+            margin: 5px;
+        }
+        #loadingScreen {
+            width: 200px;
+            margin: 5px;
+        }
+        #loadingText {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .top-left { top: 100px; left: 15%; }
+        .top-right { top: 100px; right: 15%; }
+        .bottom-left { bottom: 75px; left: 25%; }
+        .bottom-right { bottom: 75px; right: 25%; }
+        button {
+            padding: 12px;
+            margin: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 10px;
+        }
+        .confetti {
             position: absolute;
             width: 10px;
             height: 10px;
-            background-color: yellow;
-            border-radius: 50%;
-            animation: explode 1s linear infinite;
+            background-color: red;
+            opacity: 0.8;
+            animation: fall linear infinite;
         }
-        @keyframes explode {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(5); opacity: 0; }
+        @keyframes fall {
+            from { transform: translateY(-100vh) rotate(0deg); }
+            to { transform: translateY(100vh) rotate(360deg); }
         }
-        .cake {
-            font-size: 50px;
+        /* Para el mensaje de "Feliz Cumpleaños Angie" */
+        #message {
+            font-size: 2em;
+            font-family: 'Pacifico', cursive; /* Fuente cursiva para el mensaje */
+            color: black;
+            margin: 20px 0;
+            position: relative;
+            z-index: 10;
         }
-        button {
-            padding: 20px;
-            font-size: 20px;
-            cursor: pointer;
+        /* Para los comentarios */
+        #comment1, #comment2 {
+            font-family: 'Pacifico', cursive; /* Nueva fuente cursiva para los comentarios */
+            font-size: 1.5em;
+            opacity: 0;
+            transition: opacity 1.5s ease-in;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
+    <!-- Primera parte -->
+    <img id="letterSticker" src="Cosas/CartaNegra.png" alt="Carta">
+    <b id="messageText">Tienes un Mensaje</b>
+    <b id="emojiText">:3</b>
     <button id="startButton">Presionar</button>
+
+    <!-- Segunda parte -->
+    <img id="flarkSticker" src="Cosas/FLork.png" alt="Flark">
+    <img id="loadingScreen" src="Cosas/loading.gif" autoplay muted>
+
+    <!-- Tercera parte -->
     <div id="container">
-        <div id="message">🎉 ¡Feliz Cumpleaños Angie! 🎉</div>
-        <div class="cake">🎂</div>
+        <img class="sticker top-left" src="Cosas/perroRamo.webp">
+        <img class="sticker top-right" src="Cosas/GatoRamo.webp">
+        
+        <!-- Imagen de mariachis que aparece después de 5 segundos -->
+        <img id="mariachiImage" src="Cosas/mariachis.png" alt="Mariachi" style="display: none; width: 200px; margin-top: 20px; display: block; margin-left: auto; margin-right: auto;">
+        
+        <div id="message">¡Feliz Cumpleaños Angie!</div>
+        <img class="sticker bottom-left" src="Cosas/Ramo1.webp">
+        <img class="sticker bottom-right" src="Cosas/Ramo2.webp">
+
+        <!-- Cuarta parte: Comentarios ocultos al inicio -->
+        <div id="comment1" class="comment">Felices 20</div>
+        <div id="comment2" class="comment">Espero hayas tenido un bonito día</div>
     </div>
-    <audio id="music" src="https://www.myinstants.com/media/sounds/happy-birthday-to-you.mp3" loop></audio>
+
+    <audio id="music" loop>
+        <source src="Cosas/Cepillin.mp4" type="audio/mp3">
+    </audio>
+
     <script>
         document.getElementById("startButton").addEventListener("click", function() {
             this.style.display = "none";
-            document.getElementById("container").style.display = "block";
-            document.getElementById("music").play();
-            createFireworks();
+            document.getElementById("letterSticker").style.display = "none";
+            document.getElementById("messageText").style.display = "none";
+            document.getElementById("emojiText").style.display = "none";
+
+            // Segunda parte: Aparece Flork y la pantalla de carga
+            setTimeout(() => {
+                document.getElementById("flarkSticker").style.display = "block";
+                document.getElementById("loadingScreen").style.display = "block";
+            },);
+
+            // Tercera parte: Muestra el mensaje de cumpleaños
+            setTimeout(() => {
+                document.getElementById("flarkSticker").style.display = "none";
+                document.getElementById("loadingScreen").style.display = "none";
+                document.getElementById("container").style.display = "block";
+                
+                setTimeout(() => {
+                    document.getElementById("container").style.opacity = "1";
+                    createConfetti();
+                }, 500);
+
+                let music = document.getElementById("music");
+                music.volume = 0.1;
+                music.play();
+                
+                // Cuarta parte: Muestra los comentarios después de 2 y 4 segundos
+                setTimeout(() => {
+                    document.getElementById("comment1").style.display = "block";
+                    setTimeout(() => {
+                        document.getElementById("comment1").style.opacity = "1";
+                    }, 200);
+                }, 2000);
+
+                setTimeout(() => {
+                    document.getElementById("comment2").style.display = "block";
+                    setTimeout(() => {
+                        document.getElementById("comment2").style.opacity = "1";
+                    }, 200);
+                }, 4000);
+
+                // Mostrar la imagen de mariachis después de 5 segundos
+                setTimeout(() => {
+                    document.getElementById("mariachiImage").style.display = "block";
+                }, 5000);
+
+            }, 3500);
         });
-        function createFireworks() {
-            for (let i = 0; i < 20; i++) {
-                let firework = document.createElement("div");
-                firework.className = "firework";
-                document.body.appendChild(firework);
-                firework.style.left = Math.random() * window.innerWidth + "px";
-                firework.style.top = Math.random() * window.innerHeight + "px";
-                setTimeout(() => firework.remove(), 1000);
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                let confetti = document.createElement("div");
+                confetti.classList.add("confetti");
+                confetti.style.left = Math.random() * window.innerWidth + "px";
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 15000);
             }
-            setTimeout(createFireworks, 500);
         }
     </script>
 </body>
